@@ -1,20 +1,15 @@
-#!/usr/bin/env python3
-"""Solution to chapter 5, exercise 21, beyond 2: mod_times"""
+import os , glob, arrow
 
+# Shows how many days since a file has been last modified
 
-import glob
-import os
+# Empty dictionary to store file names as keys and last modified time in days
+files_info = {}
 
+def dir_info(dir_name):
+  for file in glob.glob(f'{dir_name}/*'):
+    if os.path.isfile(file):
+      files_info[file] = (arrow.now() - arrow.get(os.stat(file).st_mtime)).days
 
-def mod_times(dirname):
-    output = {}
+  return files_info
 
-    for one_filename in glob.glob(f'{dirname}/*'):
-        try:
-            mod_time = os.stat(one_filename).ST_MTIME
-            output[one_filename] = (arrow.now() - arrow.get(1503636889)).days
-
-        except:
-            pass
-
-    return output
+print(dir_info('/tmp'))
