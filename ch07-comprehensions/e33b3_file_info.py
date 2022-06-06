@@ -1,16 +1,19 @@
-#!/usr/bin/env python3
+# Write a function that takes a directory name (i.e., a string) as an argument. The
+# function should return a dict in which the keys are the names of files in that
+# directory, and the values are the file sizes. You can use os.listdir or glob
+# .glob to get the files, but because only regular files have sizes, you’ll want to fil-
+# ter the results using methods from os.path. To determine the file size, you can
+# use os.stat or (if you prefer) just check the length of the string resulting from
+# reading the file.
 
-"""Solution to chapter 7, exercise 32, beyond 3: file_info"""
+import pathlib, os
 
+def dir_file_sizes(path):
+    directory = pathlib.Path(path)
+    return {
+        item: os.stat(item).st_size
+        for item in directory.iterdir()
+        if os.path.isfile(item)
+    }
 
-def vowel_count(word):
-    total = 0
-    for one_letter in word.lower():
-        if one_letter in 'aeiou':
-            total += 1
-    return total
-
-
-def word_vowels(s):
-    return {one_word: vowel_count(one_word)
-            for one_word in s.split()}
+print(dir_file_sizes('/tmp'))
