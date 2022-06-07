@@ -1,9 +1,10 @@
-#!/usr/bin/env python3
+# In the /etc/passwd file you used earlier, what different shells (i.e., command
+# interpreters, named in the final field on each line) are assigned to users? Use a
+# set comprehension to gather them.
 
-"""Solution to chapter 7, exercise 34, beyond 1: different_shells"""
+def passwd_shells(path):
+    return { line.split(':')[-1].strip()
+             for line in open(path)
+    }
 
-
-def different_shells(filename):
-    return {one_line.split(':')[-1].strip()
-            for one_line in open(filename)
-            if not one_line.startswith(('\n', '#'))}
+print(passwd_shells('/etc/passwd'))
